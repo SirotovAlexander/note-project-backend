@@ -18,13 +18,18 @@ const findByID = async (id) => {
   return findContact;
 };
 
-const addContact = async (name, email, phone) => {
+const addContact = async (values) => {
+  const arrayOfValues = values.split(" ");
+  if (arrayOfValues.length < 3) {
+    console.log("Missing info. Try again");
+    return;
+  }
   const data = await getAll();
   const newContact = {
     id: nanoid(),
-    name: name,
-    email: email,
-    phone: phone,
+    name: arrayOfValues[0],
+    email: arrayOfValues[1],
+    phone: arrayOfValues[2],
   };
   data.push(newContact);
   const newData = await fs.writeFile(
