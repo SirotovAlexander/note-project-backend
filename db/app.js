@@ -14,7 +14,7 @@ const getAll = async () => {
 const findByID = async (id) => {
   const data = await getAll();
   const findContact = data.find((contact) => contact.id === id);
-  console.log(findContact);
+  console.log(colors.yellow(findContact));
   return findContact;
 };
 
@@ -31,7 +31,10 @@ const addContact = async (name, email, phone) => {
     contactsPath,
     JSON.stringify(data, null, 2)
   );
-  console.log(colors.yellow(newContact));
+  console.log(
+    `Contact ${newContact.name} added successfully`,
+    colors.yellow(newContact)
+  );
   return newContact;
 };
 
@@ -47,7 +50,7 @@ const deleteContact = async (id) => {
     contactsPath,
     JSON.stringify(data, null, 2)
   );
-  console.log(colors.yellow(data));
+  console.log(colors.green(`${id} delete success`));
   return newData;
 };
 

@@ -1,21 +1,53 @@
+const readline = require("node:readline");
+const colors = require("colors");
 const { getAll, findByID, addContact, deleteContact } = require("./db/app");
-// const readline = require("node:readline");
-// const { stdin: input, stdout: output } = require("node:process");
 
-// const rl = readline.createInterface({ input, output });
+const { stdin: input, stdout: output } = require("node:process");
+const rl = readline.createInterface({ input, output });
 
-// rl.question("Who are you ", (answer) => {
-//   // TODO: Log the answer in a database
-//   if (answer === "fagot") {
-//     console.log("DOLBAYOB");
-//   } else {
-//     console.log(`Thank you for your valuable feedback: ${answer}`);
-//   }
+const contactsBookFunction = async () => {
+  rl.question(
+    colors.red("Hello in your contat-book. What operation do you want to do? "),
+    async (answer) => {
+      switch (answer) {
+        case "get all":
+          const list = await getAll();
+          console.log(colors.yellow(list));
+          rl.close();
+          break;
 
-//   rl.close();
-// });
+        case "get by id":
+          rl.question(colors.red("Please enter id: "), async (answer) => {
+            const contact = await findByID(answer);
+            rl.close();
+          });
+          break;
 
-// getAll();
-// findByID("AeHIrLTr6JkxGE6SN-0Rw");
-// addContact("Slavik", "dolbayeb@gmail.com", "0000000000");
-deleteContact("AeHIrLTr6JkxGE6SN-0Rw");
+        case "delete contact":
+          rl.question(
+            colors.red("Please enter id contact which you want to remove: "),
+            async (answer) => {
+              const contact = await deleteContact(answer);
+              rl.close();
+            }
+          );
+          break;
+
+        case "add contact":
+          rl.question(
+            colors.red("Please enter name, email and phone: "),
+            async (answer) => {
+              const contact = await addContact(answer);
+              rl.close();
+            }
+          );
+          break;
+
+        default:
+          contactsBookFunction();
+      }
+    }
+  );
+};
+
+contactsBookFunction();
