@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post(
   "/register",
-  validateBody(registerUserValidationSchema),
+  //   validateBody(registerUserValidationSchema),
   ctrl.register
 );
 
