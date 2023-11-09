@@ -24,7 +24,7 @@ const userSchema = new Schema(
       default: "",
     },
   },
-  { versionKey: false, timestamps: true, createdAt: false, updatedAt: false }
+  { versionKey: false, timestamps: true }
 );
 
 const User = model("user", userSchema);
