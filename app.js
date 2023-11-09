@@ -5,7 +5,11 @@ require("dotenv").config();
 
 const app = express();
 
-const { contactRouter, diaryRouter } = require("./routes/api/index");
+const {
+  contactRouter,
+  diaryRouter,
+  userRouter,
+} = require("./routes/api/index");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -15,6 +19,7 @@ app.use(express.json());
 
 app.use("/api/contact", contactRouter);
 app.use("/api/diary", diaryRouter);
+app.use("/api/user", userRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
