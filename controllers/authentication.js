@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../models/index");
 const { ctrlWrapper } = require("../helpers/index");
 const { HttpError } = require("../helpers/index");
+const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -50,7 +51,17 @@ const login = async (req, res) => {
   });
 };
 
+const logout = async (req, res) => {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { token: "" });
+
+  res.json({
+    message: "No content",
+  });
+};
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
+  logout: ctrlWrapper(logout),
 };
