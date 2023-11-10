@@ -1,10 +1,10 @@
 const express = require("express");
 const ctrl = require("../../controllers/authentication");
-const { validateBody, authenticate } = require("../../middlewares/index");
+const { validateBody, authenticate } = require("../../middlewares");
 const {
   registerUserValidationSchema,
   loginUserValidationSchema,
-} = require("../../utils/joiSchemas/index");
+} = require("../../utils/joiSchemas");
 
 const router = express.Router();
 

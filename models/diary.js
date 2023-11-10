@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const { handleMongooseError } = require("../helpers");
 
 const dateRegexp =
   /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/g;
@@ -27,6 +28,8 @@ const noteSchema = new Schema(
   },
   { versionKey: false, timestamps: true }
 );
+
+noteSchema.post("save", handleMongooseError);
 
 const Note = model("note", noteSchema);
 
