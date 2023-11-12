@@ -1,3 +1,4 @@
+// const { format } = require("date-fns");
 const { Note } = require("../models");
 const { ctrlWrapper } = require("../helpers/");
 const { HttpError } = require("../helpers/");
@@ -9,6 +10,7 @@ const getAllNotes = async (req, res) => {
 
 const getByDate = async (req, res) => {
   const { date } = req.params;
+  //   format(new Date(date), "dd.MM.yyyy");
   const result = await Note.find(date);
   if (!result) {
     throw HttpError(404, "Not found");
