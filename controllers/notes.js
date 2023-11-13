@@ -9,9 +9,8 @@ const getAllNotes = async (req, res) => {
 };
 
 const getByDate = async (req, res) => {
-  const { date } = req.params;
-  const correctDate = moment(req.body.date).format("DD.MM.YYYY");
-  const result = await Note.find(correctDate);
+  const date = moment(req.params.date).format("DD.MM.YYYY");
+  const result = await Note.find(date);
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -19,12 +18,21 @@ const getByDate = async (req, res) => {
 };
 
 const deleteById = async (req, res) => {
-  const { id } = req.params;
-  const result = await Note.findByIdAndRemove(id);
+  const { _id: owner } = req.user;
+  const { id: _id } = req.params;
+  const result = await Note.findOneAndDelete({
+    _id,
+    owner,
+  });
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.json(result);
+  res.json({
+    _id: result._id,
+    title: result.title,
+    date: result.date,
+    text: result.text,
+  });
 };
 
 const addNote = async (req, res) => {

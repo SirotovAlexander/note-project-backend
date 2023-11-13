@@ -7,9 +7,9 @@ const router = express.Router();
 
 router.get("/notes", authenticate, ctrl.getAllNotes);
 
-router.get("/notes:date", authenticate, ctrl.getByDate);
+router.get("/notes", authenticate, ctrl.getByDate);
 
-router.delete("/notes:id", authenticate, ctrl.deleteById);
+router.delete("/notes/:id", authenticate, ctrl.deleteById);
 
 router.post(
   "/notes",
