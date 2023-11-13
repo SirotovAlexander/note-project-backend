@@ -3,6 +3,8 @@ const ctrl = require("../../controllers/notes");
 const { validateBody, authenticate } = require("../../middlewares");
 const { noteValidationSchema } = require("../../utils/joiSchemas");
 
+const router = express.Router();
+
 router.get(
   "/notes",
   authenticate,
@@ -30,7 +32,5 @@ router.post(
   validateBody(noteValidationSchema),
   ctrl.addNote
 );
-
-const router = express.Router();
 
 module.exports = router;
