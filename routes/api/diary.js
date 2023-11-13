@@ -5,12 +5,7 @@ const { noteValidationSchema } = require("../../utils/joiSchemas");
 
 const router = express.Router();
 
-router.get(
-  "/notes",
-  authenticate,
-  validateBody(noteValidationSchema),
-  ctrl.getAllNotes
-);
+router.get("/notes", authenticate, ctrl.getAllNotes);
 
 router.get(
   "/notes:date",
