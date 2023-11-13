@@ -1,4 +1,4 @@
-// const { format } = require("date-fns");
+const moment = require("moment");
 const { Note } = require("../models");
 const { ctrlWrapper } = require("../helpers/");
 const { HttpError } = require("../helpers/");
@@ -10,8 +10,8 @@ const getAllNotes = async (req, res) => {
 
 const getByDate = async (req, res) => {
   const { date } = req.params;
-  //   format(new Date(date), "dd.MM.yyyy");
-  const result = await Note.find(date);
+  const correctDate = moment(req.body.date).format("DD.MM.YYYY");
+  const result = await Note.find(correctDate);
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -29,8 +29,16 @@ const deleteById = async (req, res) => {
 
 const addNote = async (req, res) => {
   const { _id: owner } = req.user;
+
+  req.body.date = moment(req.body.date).format("DD.MM.YYYY");
+
   const result = await Note.create({ ...req.body, owner });
-  res.status(201).json(result);
+  res.status(201).json({
+    _id: result._id,
+    title: req.body.title,
+    date: req.body.date,
+    text: req.body.text,
+  });
 };
 
 module.exports = {
