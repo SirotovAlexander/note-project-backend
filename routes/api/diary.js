@@ -7,19 +7,9 @@ const router = express.Router();
 
 router.get("/notes", authenticate, ctrl.getAllNotes);
 
-router.get(
-  "/notes:date",
-  authenticate,
-  validateBody(noteValidationSchema),
-  ctrl.getByDate
-);
+router.get("/notes:date", authenticate, ctrl.getByDate);
 
-router.delete(
-  "/notes:id",
-  authenticate,
-  validateBody(noteValidationSchema),
-  ctrl.deleteById
-);
+router.delete("/notes:id", authenticate, ctrl.deleteById);
 
 router.post(
   "/notes",
